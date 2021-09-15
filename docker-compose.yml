@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  ftp:
+
+    image: stilliard/pure-ftpd
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      PUBLICHOST: 192.168.100.3
+      FTP_USER_NAME: remote
+      FTP_USER_PASS: remote
+      FTP_USER_HOME: /home/remote
+    volumes:
+      - /home/vagrant/data/ftp:/home/remote
+    ports:
+      - target: 21
+        published: 21
+        protocol: tcp
+        mode: host
+
+      - "30000-30009:30000-30009"
